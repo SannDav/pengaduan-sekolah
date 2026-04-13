@@ -84,6 +84,13 @@
                             <td>
                                 <strong>{{ $laporan->kategori->ket_kategori }}</strong><br>
                                 <span class="text-muted">{{ $laporan->ket }}</span>
+                                @if($laporan->foto)
+                                    <div class="mt-2">
+                                        <a href="{{ asset($laporan->foto) }}" target="_blank">
+                                            <img src="{{ asset($laporan->foto) }}" alt="Foto Laporan" style="max-width: 140px; max-height: 100px; object-fit: cover; border-radius: 12px;">
+                                        </a>
+                                    </div>
+                                @endif
                             </td>
                             <td>
                                 @if($laporan->status == 'Selesai')

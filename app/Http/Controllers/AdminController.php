@@ -42,6 +42,9 @@ class AdminController extends Controller
         if (!session('admin_id')) return redirect('/login');
     
         $aspirasi = Aspirasi::findOrFail($id);
+        if ($aspirasi->foto && file_exists(public_path($aspirasi->foto))) {
+            @unlink(public_path($aspirasi->foto));
+        }
         $aspirasi->delete();
     
         return redirect()->back()->with('success', 'Laporan sudah disapu bersih dari muka bumi!');

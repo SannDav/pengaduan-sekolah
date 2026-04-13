@@ -84,7 +84,7 @@
         <div class="col-lg-5 mx-auto">
             <div class="card p-4">
                 <h4 class="fw-bold mb-3"><i class="bi bi-pencil-square text-primary"></i> Tulis Aspirasi</h4>
-                <form action="/lapor" method="POST">
+                <form action="/lapor" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="row">
                         <div class="col-md-6 mb-3">
@@ -107,6 +107,11 @@
                     <div class="mb-3">
                         <label class="form-label fw-600">Laporan</label>
                         <textarea name="ket" class="form-control" rows="3" placeholder="Jelaskan masalahnya, Lek..." required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-600">Foto Bukti (Opsional)</label>
+                        <input type="file" name="foto" class="form-control" accept="image/jpeg,image/png,image/jpg,image/gif">
+                        <small class="text-muted">Unggah foto jika ingin memperjelas laporan, maksimal 2MB.</small>
                     </div>
                     <button type="submit" class="btn btn-primary w-100 shadow-sm">Kirim Laporan Sekarang</button>
                 </form>
@@ -138,6 +143,13 @@
                                     <span class="badge bg-info text-dark mb-1" style="width: fit-content; font-size: 10px;">{{ $aspi->kategori->ket_kategori ?? 'Umum' }}</span>
                                     <span class="text-dark fw-bold">{{ $aspi->ket }}</span>
                                     <small class="text-muted"><i class="bi bi-geo-alt"></i> {{ $aspi->lokasi }}</small>
+                                    @if($aspi->foto)
+                                        <div class="mt-2">
+                                            <a href="{{ asset($aspi->foto) }}" target="_blank" class="text-decoration-none">
+                                                <img src="{{ asset($aspi->foto) }}" alt="Foto Aspirasi" style="max-width: 120px; max-height: 90px; object-fit: cover; border-radius: 10px;">
+                                            </a>
+                                        </div>
+                                    @endif
                                 </div>
                             </td>
                             <td>

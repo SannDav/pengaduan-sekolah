@@ -27,6 +27,7 @@
                     <th>NIS</th>
                     <th>Laporan</th>
                     <th>Status</th>
+                    <th>Foto</th>
                     <th>Feedback</th>
                     <th>Aksi</th>
                 </tr>
@@ -44,6 +45,15 @@
                             {{ $aspi->status }}
                         </span>
                     </td>
+                    <td>
+                        @if($aspi->foto)
+                            <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalFoto{{ $aspi->id_pelaporan }}">
+                                Lihat Foto
+                            </button>
+                        @else
+                            -
+                        @endif
+                    </td>
                     <td>{{ $aspi->feedback ?? '-' }}</td>
                     <td>
                         <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalTanggapan{{ $aspi->id_pelaporan }}">
@@ -58,6 +68,20 @@
                     </td>
                 </tr>
 
+                <div class="modal fade" id="modalFoto{{ $aspi->id_pelaporan }}" tabindex="-1">
+                    <div class="modal-dialog modal-dialog-centered modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Foto Bukti Laporan (NIS: {{ $aspi->nis }})</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+                            </div>
+                            <div class="modal-body text-center">
+                                <img src="{{ asset($aspi->foto) }}" alt="Foto Aspirasi" class="img-fluid rounded" style="max-height: 70vh;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="modal fade" id="modalTanggapan{{ $aspi->id_pelaporan }}" tabindex="-1">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -65,6 +89,7 @@
                                 @csrf
                                 <div class="modal-header">
                                     <h5 class="modal-title">Beri Umpan Balik (NIS: {{ $aspi->nis }})</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
                                 </div>
                                 <div class="modal-body">
                                     <div class="mb-3">
