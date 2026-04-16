@@ -9,14 +9,9 @@ Route::get('/', function () {
     return view('welcome'); 
 });
 
-
 // Halaman Form & List (Halaman yang baru kita buat)
 Route::get('/aspirasi', [AspirasiController::class, 'index']);
-Route::post('/lapor', [AspirasiController::class, 'store']);
-
-// Route Siswa
-Route::get('/', function () { return view('welcome'); });
-Route::get('/aspirasi', [AspirasiController::class, 'index']);
+Route::get('/aspirasi/stats', [AspirasiController::class, 'stats']);
 Route::post('/lapor', [AspirasiController::class, 'store']);
 
 // Route Admin 

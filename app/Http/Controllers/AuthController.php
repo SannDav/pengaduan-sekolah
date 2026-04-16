@@ -4,12 +4,16 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Admin;
+use App\Models\Siswa;
 
 class AuthController extends Controller {
     public function showLogin() {
         // Kalau sudah ada session, gak usah login lagi, Wak!
         if (session('admin_id')) {
             return redirect('/admin');
+        }
+        if (session('siswa_nis')) {
+            return redirect('/aspirasi');
         }
         return view('login');
     }
@@ -37,10 +41,10 @@ class AuthController extends Controller {
     }
 
     public function loginSiswa(Request $request) {
-        $siswa = \App\Models\Siswa::where('nis', $request->nis)->first();
+        $siswa = Siswa::where('nis', $request->nis)->first();
     
         // Cek NIS dan Password (asumsi password di database sudah di-bcrypt)
-        if ($siswa && \Illuminate\Support\Facades\Hash::check($request->password, $siswa->password)) {
+        if ($siswa && Hash::check($request->password, $siswa->password)) {
             // Hapus session admin kalau ada (Biar gak bentrok)
             session()->forget(['admin_id', 'admin_nama']);
             
@@ -55,4 +59,35 @@ class AuthController extends Controller {
         return back()->with('error', 'NIS atau Password salah, Lek!');
     }
 
+    public function showRegister() {
+        if (session('siswa_nis')) {
+            return redirect('/aspirasi');
+        }
+        if (session('admin_id')) {
+            return redirect('/admin');
+        }
+
+        return view('register');
+    }
+
+    public function registerSiswa(Request $request) {
+        $request->validate([
+            'nis' => 'required|numeric|digits_between:1,10|unique:siswas,nis',
+            'nama' => 'required|string|max:35',
+            'kelas' => 'required|string|max:10',
+            'password' => 'required|string|min:6|confirmed',
+        ], [
+            'nis.unique' => 'NIS sudah terdaftar.',
+            'password.confirmed' => 'Password konfirmasi tidak cocok.',
+        ]);
+
+        Siswa::create([
+            'nis' => $request->nis,
+            'nama' => $request->nama,
+            'kelas' => $request->kelas,
+            'password' => Hash::make($request->password),
+        ]);
+
+        return redirect('/login')->with('success', 'Registrasi berhasil. Silakan login sebagai siswa.');
+    }
 }

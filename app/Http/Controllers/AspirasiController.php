@@ -11,9 +11,42 @@ class AspirasiController extends Controller
     public function index() 
     {
         $kategoris = Kategori::all();
-        $aspirasis = Aspirasi::with('kategori')->orderBy('created_at', 'desc')->get();
+
+        if (session('admin_id')) {
+            $aspirasis = Aspirasi::with('kategori')
+                ->orderBy('created_at', 'desc')
+                ->get();
+
+            return view('aspirasi', compact('kategoris', 'aspirasis'));
+        }
+
+        if (!session('siswa_nis')) {
+            return redirect('/login')->with('error', 'Login dulu, Wak. Baru bisa lihat laporanmu di sini.');
+        }
+
+        $aspirasis = Aspirasi::where('nis', session('siswa_nis'))
+                        ->with('kategori')
+                        ->orderBy('created_at', 'desc')
+                        ->get();
     
         return view('aspirasi', compact('kategoris', 'aspirasis'));
+    }
+
+    public function stats()
+    {
+        if (session('admin_id')) {
+            $scope = Aspirasi::query();
+        } elseif (session('siswa_nis')) {
+            $scope = Aspirasi::where('nis', session('siswa_nis'));
+        } else {
+            return response()->json(['error' => 'Unauthorized'], 403);
+        }
+
+        return response()->json([
+            'total' => $scope->count(),
+            'menunggu' => (clone $scope)->where('status', 'Menunggu')->count(),
+            'selesai' => (clone $scope)->where('status', 'Selesai')->count(),
+        ]);
     }
 
     public function profile() {
