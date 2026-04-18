@@ -11,25 +11,46 @@ class AspirasiController extends Controller
     public function index() 
     {
         $kategoris = Kategori::all();
+        $status = request('status');
 
         if (session('admin_id')) {
-            $aspirasis = Aspirasi::with('kategori')
-                ->orderBy('created_at', 'desc')
-                ->get();
+            $aspirasisQuery = Aspirasi::with('kategori')
+                ->orderBy('created_at', 'desc');
 
-            return view('aspirasi', compact('kategoris', 'aspirasis'));
+            $stats = [
+                'total' => $aspirasisQuery->count(),
+                'menunggu' => (clone $aspirasisQuery)->where('status', 'Menunggu')->count(),
+                'proses' => (clone $aspirasisQuery)->where('status', 'Proses')->count(),
+                'selesai' => (clone $aspirasisQuery)->where('status', 'Selesai')->count(),
+            ];
+
+            if (in_array($status, ['Menunggu', 'Proses', 'Selesai'])) {
+                $aspirasisQuery->where('status', $status);
+            }
+
+            $aspirasis = $aspirasisQuery->get();
+
+            return view('aspirasi', compact('kategoris', 'aspirasis', 'status', 'stats'));
         }
 
         if (!session('siswa_nis')) {
             return redirect('/login')->with('error', 'Login dulu, Wak. Baru bisa lihat laporanmu di sini.');
         }
 
-        $aspirasis = Aspirasi::where('nis', session('siswa_nis'))
+        $aspirasisQuery = Aspirasi::where('nis', session('siswa_nis'))
                         ->with('kategori')
-                        ->orderBy('created_at', 'desc')
-                        ->get();
-    
-        return view('aspirasi', compact('kategoris', 'aspirasis'));
+                        ->orderBy('created_at', 'desc');
+
+        $stats = [
+            'total' => $aspirasisQuery->count(),
+            'menunggu' => (clone $aspirasisQuery)->where('status', 'Menunggu')->count(),
+            'proses' => (clone $aspirasisQuery)->where('status', 'Proses')->count(),
+            'selesai' => (clone $aspirasisQuery)->where('status', 'Selesai')->count(),
+        ];
+
+        $aspirasis = $aspirasisQuery->get();
+
+        return view('aspirasi', compact('kategoris', 'aspirasis', 'stats'));
     }
 
     public function stats()
@@ -45,6 +66,7 @@ class AspirasiController extends Controller
         return response()->json([
             'total' => $scope->count(),
             'menunggu' => (clone $scope)->where('status', 'Menunggu')->count(),
+            'proses' => (clone $scope)->where('status', 'Proses')->count(),
             'selesai' => (clone $scope)->where('status', 'Selesai')->count(),
         ]);
     }

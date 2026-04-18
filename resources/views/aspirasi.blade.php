@@ -256,6 +256,19 @@
         }
         .btn-view:hover { background: rgba(99,130,255,0.16); color: #c7d2fe; }
 
+        .filter-btn {
+            display: inline-flex; align-items: center; justify-content: center;
+            padding: 0.55rem 1rem; border-radius: 999px;
+            background: rgba(99,130,255,0.08); border: 1px solid rgba(99,130,255,0.16);
+            color: #c7d2fe; font-size: 0.82rem; font-weight: 700;
+            text-decoration: none; transition: all 0.2s;
+        }
+        .filter-btn.active,
+        .filter-btn:hover {
+            background: rgba(101,116,248,0.18); border-color: rgba(101,116,248,0.36);
+            color: #eff6ff;
+        }
+
         /* ── MODAL ── */
         .modal-content {
             background: rgba(10,16,32,0.97) !important;
@@ -406,22 +419,21 @@
                     </div>
                     <div class="d-flex flex-wrap align-items-center gap-3">
                         <div class="stat-chip">
-                            <div class="num" id="stat-total">{{ count($aspirasis) }}</div>
+                            <div class="num" id="stat-total">{{ $stats['total'] ?? count($aspirasis) }}</div>
                             <small>Total</small>
                         </div>
                         <div class="stat-chip">
-                            <div class="num" id="stat-menunggu">{{ $aspirasis->where('status','Menunggu')->count() }}</div>
+                            <div class="num" id="stat-menunggu">{{ $stats['menunggu'] ?? $aspirasis->where('status','Menunggu')->count() }}</div>
                             <small>Menunggu</small>
                         </div>
                         <div class="stat-chip">
-                            <div class="num" id="stat-selesai">{{ $aspirasis->where('status','Selesai')->count() }}</div>
+                            <div class="num" id="stat-proses">{{ $stats['proses'] ?? $aspirasis->where('status','Proses')->count() }}</div>
+                            <small>Proses</small>
+                        </div>
+                        <div class="stat-chip">
+                            <div class="num" id="stat-selesai">{{ $stats['selesai'] ?? $aspirasis->where('status','Selesai')->count() }}</div>
                             <small>Selesai</small>
                         </div>
-                        @if(!session('admin_id'))
-                        <button type="button" class="btn-hero-new" data-bs-toggle="modal" data-bs-target="#modalBuatAspirasi">
-                            <i class="bi bi-plus-lg"></i> Buat Laporan
-                        </button>
-                        @endif
                     </div>
                 </div>
             </div>
@@ -434,13 +446,19 @@
                         <p class="card-subtitle">{{ session('admin_id') ? 'Admin dapat melihat semua laporan siswa yang telah masuk.' : 'Hanya laporan yang dikirim oleh NIS kamu sendiri.' }}</p>
                     </div>
                     @if(!session('admin_id'))
-                    <button type="button" class="btn-outline-new" data-bs-toggle="modal" data-bs-target="#modalBuatAspirasi">
+                    <button type="button" class="btn-hero-new" data-bs-toggle="modal" data-bs-target="#modalBuatAspirasi">
                         <i class="bi bi-pencil-square"></i> Laporan Baru
                     </button>
                     @endif
                 </div>
 
                 @if(session('admin_id'))
+                    <div class="d-flex flex-wrap align-items-center gap-2 mb-4">
+                        <a href="/aspirasi" class="filter-btn {{ empty($status) ? 'active' : '' }}">Total</a>
+                        <a href="/aspirasi?status=Menunggu" class="filter-btn {{ $status == 'Menunggu' ? 'active' : '' }}">Menunggu</a>
+                        <a href="/aspirasi?status=Proses" class="filter-btn {{ $status == 'Proses' ? 'active' : '' }}">Proses</a>
+                        <a href="/aspirasi?status=Selesai" class="filter-btn {{ $status == 'Selesai' ? 'active' : '' }}">Selesai</a>
+                    </div>
                     <div class="row row-cols-1 row-cols-md-2 g-4">
                         @forelse($aspirasis as $aspi)
                         <div class="col">
@@ -705,6 +723,7 @@
 
         const statTotal = document.getElementById('stat-total');
         const statMenunggu = document.getElementById('stat-menunggu');
+        const statProses = document.getElementById('stat-proses');
         const statSelesai = document.getElementById('stat-selesai');
 
         async function refreshAspirasiStats() {
@@ -715,6 +734,7 @@
                 const data = await response.json();
                 statTotal.textContent = data.total;
                 statMenunggu.textContent = data.menunggu;
+                statProses.textContent = data.proses;
                 statSelesai.textContent = data.selesai;
             } catch (error) {
                 console.warn('Gagal memuat statistik:', error);
