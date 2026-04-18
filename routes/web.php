@@ -17,8 +17,13 @@ Route::post('/lapor', [AspirasiController::class, 'store']);
 
 // Route Admin 
 Route::get('/admin', [AdminController::class, 'index']);
+Route::get('/admin/stats', [AdminController::class, 'stats']);
 Route::post('/admin/feedback/{id}', [AdminController::class, 'update']);
 Route::delete('/admin/hapus/{id}', [AdminController::class, 'destroy']);
+Route::post('/admin/bulk-delete', [AdminController::class, 'bulkDelete']);
+Route::post('/admin/bulk-status', [AdminController::class, 'bulkStatus']);
+Route::get('/admin/export/csv', [AdminController::class, 'exportCsv']);
+Route::get('/admin/export/pdf', [AdminController::class, 'exportPdf']);
 
 // Route Notifikasi
 Route::get('/notifications', [NotificationController::class, 'index']);
