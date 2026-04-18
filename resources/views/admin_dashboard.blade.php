@@ -90,6 +90,19 @@
             border-radius: 1.25rem;
             border: none;
         }
+
+        @media (max-width: 992px) {
+            .dashboard-summary .col-sm-6 { flex: 0 0 100%; max-width: 100%; }
+            .table-responsive { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        }
+
+        @media (max-width: 768px) {
+            .navbar .container { gap: 0.75rem; flex-wrap: wrap; }
+            .table tbody td { padding: 0.75rem; font-size: 0.82rem; }
+            .d-flex.justify-content-between { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
+            .btn-outline-secondary { width: 100%; margin-top: 0.75rem; }
+            .orb { display: none; }
+        }
     </style>
 </head>
 <body>
@@ -97,7 +110,10 @@
 <nav class="navbar navbar-expand-lg sticky-top">
     <div class="container">
         <a class="navbar-brand fw-bold" href="/"><i class="bi bi-megaphone-fill"></i> LaporSekolah!</a>
-        <div class="collapse navbar-collapse">
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#adminNavbar" aria-controls="adminNavbar" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-list fs-4"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="adminNavbar">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link" href="/">Beranda</a></li>
                 <li class="nav-item"><a class="nav-link text-danger" href="/logout">Logout</a></li>

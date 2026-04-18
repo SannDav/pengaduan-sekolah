@@ -295,6 +295,22 @@
             padding: 1.5rem 0;
             text-align: center; color: var(--text-dim); font-size: 0.83rem;
         }
+
+        @media (max-width: 992px) {
+            .profile-hero { padding: 1.5rem 1.5rem; }
+            .stats-row { flex-direction: column; }
+            .card-head { flex-direction: column; align-items: stretch; gap: 1rem; }
+            .content-card { padding: 1.5rem; }
+        }
+
+        @media (max-width: 768px) {
+            .page-wrap { padding: 1.5rem 0 3rem; }
+            .report-table tbody td { padding: 0.8rem; font-size: 0.86rem; }
+            .badge-unread { font-size: 0.72rem; padding: 0.2rem 0.5rem; }
+            .navbar .container { gap: 0.75rem; flex-wrap: wrap; }
+            .navbar-nav { flex-direction: column; align-items: stretch; }
+            .orb { display: none; }
+        }
     </style>
 </head>
 <body>

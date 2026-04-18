@@ -71,6 +71,22 @@
         .page-item.active .page-link { background: var(--indigo); border-color: var(--indigo); }
 
         footer { position: relative; z-index: 1; border-top: 1px solid rgba(99,130,255,0.08); padding: 1.5rem 0; text-align: center; color: var(--text-dim); font-size: 0.83rem; }
+
+        @media (max-width: 992px) {
+            .page-hero { padding: 1.75rem; }
+            .content-card { padding: 1.5rem; }
+            .card-head { flex-direction: column; align-items: stretch; gap: 1rem; }
+            .btn-mark-all { width: 100%; justify-content: center; }
+        }
+
+        @media (max-width: 768px) {
+            .page-wrap { padding: 1.5rem 0 3rem; }
+            .notification-item { padding: 1rem; }
+            .notification-message, .notification-time { font-size: 0.92rem; }
+            .navbar .container { gap: 0.75rem; flex-wrap: wrap; }
+            .navbar-nav { flex-direction: column; align-items: stretch; }
+            .orb { display: none; }
+        }
     </style>
 </head>
 <body>

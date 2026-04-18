@@ -284,6 +284,23 @@
             color: var(--text-dim); text-align: center; font-size: 0.88rem;
         }
         footer span { color: var(--indigo); }
+
+        @media (max-width: 992px) {
+            .hero { padding: 4rem 0 2.5rem; }
+            .hero-actions { flex-direction: column; align-items: stretch; }
+            .hero-card-mock { padding: 1.25rem; }
+            .step-card { padding: 1.35rem; }
+        }
+
+        @media (max-width: 768px) {
+            .page-wrap { padding: 2rem 0; }
+            .hero h1 { font-size: clamp(2.1rem, 7vw, 3rem); }
+            .hero p { max-width: 100%; }
+            .btn-hero, .btn-hero-primary, .btn-hero-ghost { width: 100%; justify-content: center; }
+            .navbar .container { gap: 0.75rem; flex-wrap: wrap; }
+            .navbar-nav { flex-direction: column; align-items: stretch; }
+            .orb { display: none; }
+        }
     </style>
 </head>
 <body>

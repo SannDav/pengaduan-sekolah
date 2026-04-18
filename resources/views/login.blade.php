@@ -222,6 +222,9 @@
         @media (max-width: 640px) {
             .login-panel-left { display: none; }
             .login-panel-right { padding: 2rem 1.5rem; }
+            .login-wrap { max-width: 100%; margin: 1rem; }
+            .tab-switcher { flex-direction: column; gap: 0.5rem; }
+            .orb { display: none; }
         }
     </style>
 </head>

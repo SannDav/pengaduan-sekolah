@@ -355,6 +355,24 @@
             font-family: 'DM Sans', sans-serif !important;
         }
         .swal2-title, .swal2-html-container { color: var(--text) !important; }
+
+        @media (max-width: 992px) {
+            .page-wrap { padding: 1.75rem 0 3rem; }
+            .page-hero { padding: 1.75rem; }
+            .content-card { padding: 1.5rem; }
+            .card-head { flex-direction: column; align-items: stretch; gap: 1rem; }
+            .table-responsive { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: clamp(1.9rem, 7vw, 2.4rem); }
+            .page-hero p { max-width: 100%; }
+            .report-table tbody td { padding: 0.75rem; font-size: 0.82rem; }
+            .btn-view, .filter-btn, .btn-modal-primary, .btn-modal-cancel { width: 100%; justify-content: center; }
+            .modal-dialog { max-width: 100%; margin: 1rem; }
+            .modal-content { margin: 0 0.5rem; }
+            .orb { display: none; }
+        }
     </style>
 </head>
 <body>
