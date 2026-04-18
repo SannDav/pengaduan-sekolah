@@ -3,6 +3,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AspirasiController; 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\NotificationController;
 
 // Halaman Utama (Landing Page)
 Route::get('/', function () {
@@ -18,6 +19,11 @@ Route::post('/lapor', [AspirasiController::class, 'store']);
 Route::get('/admin', [AdminController::class, 'index']);
 Route::post('/admin/feedback/{id}', [AdminController::class, 'update']);
 Route::delete('/admin/hapus/{id}', [AdminController::class, 'destroy']);
+
+// Route Notifikasi
+Route::get('/notifications', [NotificationController::class, 'index']);
+Route::post('/notifications/{id}/read', [NotificationController::class, 'markAsRead']);
+Route::post('/notifications/mark-all-read', [NotificationController::class, 'markAllAsRead']);
 
 // --- JALUR LOGIN/LOGOUT ---
 Route::get('/login', [AuthController::class, 'showLogin']);

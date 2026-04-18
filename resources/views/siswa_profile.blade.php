@@ -246,6 +246,48 @@
             font-style: italic;
         }
 
+        /* ── NOTIFICATION HISTORY ── */
+        .notification-history { margin-bottom: 1rem; }
+        .notification-item {
+            background: rgba(99,130,255,0.06);
+            border: 1px solid rgba(99,130,255,0.12);
+            border-radius: 0.8rem;
+            padding: 1rem;
+            margin-bottom: 0.8rem;
+            transition: all 0.2s;
+        }
+        .notification-item:hover {
+            background: rgba(99,130,255,0.1);
+            border-color: rgba(99,130,255,0.2);
+        }
+        .notification-item.unread {
+            border-left: 3px solid var(--indigo);
+            background: rgba(101,116,248,0.08);
+        }
+        .notification-title {
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 0.25rem;
+            font-size: 0.9rem;
+        }
+        .notification-message {
+            color: var(--text-soft);
+            font-size: 0.85rem;
+            margin-bottom: 0.4rem;
+        }
+        .notification-time {
+            color: var(--text-dim);
+            font-size: 0.75rem;
+        }
+        .badge-unread {
+            background: var(--indigo);
+            color: #fff;
+            font-size: 0.65rem;
+            padding: 0.15rem 0.45rem;
+            border-radius: 999px;
+            font-weight: 600;
+        }
+
         /* ── FOOTER ── */
         footer {
             position: relative; z-index: 1;
@@ -392,6 +434,48 @@
                                 @endforeach
                             </tbody>
                         </table>
+                    </div>
+                @endif
+            </div>
+
+            <!-- NOTIFICATION HISTORY -->
+            <div class="content-card">
+                <div class="card-title">
+                    <i class="bi bi-bell"></i> Riwayat Notifikasi
+                </div>
+
+                @php
+                    $recentNotifications = \App\Models\Notification::where('user_id', session('siswa_nis'))
+                        ->orderBy('created_at', 'desc')
+                        ->limit(5)
+                        ->get();
+                @endphp
+
+                @if($recentNotifications->isEmpty())
+                    <div class="empty-state">
+                        <div class="empty-icon"><i class="bi bi-bell-slash"></i></div>
+                        <h5>Belum Ada Notifikasi</h5>
+                        <p>Notifikasi akan muncul saat ada update pada laporan kamu.</p>
+                    </div>
+                @else
+                    <div class="notification-history">
+                        @foreach($recentNotifications as $notif)
+                        <div class="notification-item {{ $notif->read_at ? '' : 'unread' }}">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <div class="notification-title">{{ $notif->title }}</div>
+                                    <div class="notification-message">{{ $notif->message }}</div>
+                                    <div class="notification-time">{{ $notif->created_at->diffForHumans() }}</div>
+                                </div>
+                                @if(!$notif->read_at)
+                                <span class="badge-unread">Baru</span>
+                                @endif
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
+                    <div class="text-center mt-3">
+                        <a href="/notifications" class="btn-primary-pill"><i class="bi bi-bell"></i> Lihat Semua Notifikasi</a>
                     </div>
                 @endif
             </div>
