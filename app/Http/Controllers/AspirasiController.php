@@ -98,7 +98,7 @@ class AspirasiController extends Controller
             'nis'         => 'required|numeric|digits_between:5,10', // NIS harus angka & panjangnya pas
             'id_kategori' => 'required|exists:kategoris,id_kategori', // Kategori harus ada di database
             'lokasi'      => 'required|max:50',
-            'ket'         => 'required|min:10', // Biar nggak cuma isi "asdasd"
+            'ket'         => 'required|min:10|max:255', // Biar nggak cuma isi "asdasd"
             'foto'        => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ], [
             // Pesan eror pake bahasa kita biar mantap
