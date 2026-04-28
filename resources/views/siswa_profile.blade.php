@@ -159,10 +159,12 @@
                     <li class="nav-item dropdown ms-2">
                         <a class="nav-link dropdown-toggle-pill" href="#" role="button" data-bs-toggle="dropdown">
                             <i class="bi bi-person-circle me-1"></i> {{ $user->nama }}
+                            @php $unreadCount = \App\Models\Notification::where('user_id', session('siswa_nis'))->whereNull('read_at')->count(); @endphp
+                                @if($unreadCount > 0)<span class="badge bg-danger ms-1" style="font-size: 0.7rem;">{{ $unreadCount }}</span>@endif
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li><a class="dropdown-item" href="/profile"><i class="bi bi-collection me-2"></i>Laporan Saya</a></li>
-                            <li><a class="dropdown-item" href="/notifications"><i class="bi bi-bell me-2"></i>Notifikasi</a></li>
+                            <li><a class="dropdown-item" href="/notifications"><i class="bi bi-bell me-2"></i>Notifikasi @if($unreadCount > 0)<span class="badge bg-danger ms-1" style="font-size: 0.7rem;">{{ $unreadCount }}</span>@endif</a></li>
                             <li><div class="dropdown-divider"></div></li>
                             <li><a class="dropdown-item" href="/logout" style="color: var(--rose) !important;"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
                         </ul>
