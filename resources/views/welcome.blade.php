@@ -316,8 +316,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto align-items-center gap-1">
-                    <li class="nav-item"><a class="nav-link" href="#alur"><i class="bi bi-diagram-3 me-1"></i>Alur</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#laporan"><i class="bi bi-journal-text me-1"></i>Laporan</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#alur"><i class="bi bi-journal-text me-1"></i>Keunggulan</a></li>
                     <li class="nav-item"><a class="nav-link" href="/aspirasi"><i class="bi bi-megaphone me-1"></i>Semua Laporan</a></li>
                     @if(session('siswa_nis'))
                         <li class="nav-item dropdown ms-2">
@@ -582,51 +581,8 @@
         </div>
     </section>
 
-    <!-- ═══ ALUR KERJA ═══ -->
-    <section id="alur" class="section">
-        <div class="container">
-            <div class="text-center mb-5">
-                <div class="section-label"><i class="bi bi-diagram-3"></i> Alur Kerja</div>
-                <h2 class="section-title">Cemana Alurnya, Lek?</h2>
-                <p class="section-sub">Tiga langkah simpel dari laporan ke solusi nyata.</p>
-            </div>
-            <div class="row g-4">
-                <div class="col-md-4">
-                    <div class="step-card">
-                        <span class="step-num">01</span>
-                        <div class="step-icon" style="background: rgba(101,116,248,0.14);">
-                            <i class="bi bi-pencil-square" style="color: var(--indigo);"></i>
-                        </div>
-                        <h4>Tulis Laporan</h4>
-                        <p>Login pake NIS kau, terus ceritakan masalah atau aspirasi dengan jujur dan jelas.</p>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="step-card">
-                        <span class="step-num">02</span>
-                        <div class="step-icon" style="background: rgba(251,191,36,0.12);">
-                            <i class="bi bi-gear-wide-connected" style="color: var(--amber);"></i>
-                        </div>
-                        <h4>Proses Verifikasi</h4>
-                        <p>Admin bakal nengok laporan kau. Statusnya berubah jadi 'Proses' tanda sedang ditangani.</p>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="step-card">
-                        <span class="step-num">03</span>
-                        <div class="step-icon" style="background: rgba(52,211,153,0.12);">
-                            <i class="bi bi-check2-all" style="color: var(--emerald);"></i>
-                        </div>
-                        <h4>Dapat Feedback</h4>
-                        <p>Masalah kelar, kau dapat umpan balik langsung dari admin di aplikasi ini.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- ═══ KENAPA LAPOR SINI ═══ -->
-    <section class="why-section">
+    <section class="why-section" id="alur"
         <div class="container">
             <div class="text-center mb-5">
                 <div class="section-label"><i class="bi bi-shield-check"></i> Keunggulan</div>
