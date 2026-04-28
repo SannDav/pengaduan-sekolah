@@ -54,16 +54,65 @@
         .card-title { font-family: 'Sora', sans-serif; font-weight: 700; font-size: 1.05rem; color: var(--text); display: flex; align-items: center; gap: 0.55rem; margin: 0; }
         .card-title i { color: var(--indigo); }
 
-        .notification-item { background: rgba(99,130,255,0.06); border: 1px solid rgba(99,130,255,0.12); border-radius: 1rem; padding: 1.25rem; margin-bottom: 1rem; transition: all 0.2s; cursor: pointer; }
-        .notification-item:hover { background: rgba(99,130,255,0.1); border-color: rgba(99,130,255,0.2); }
-        .notification-item.unread { border-left: 4px solid var(--indigo); background: rgba(101,116,248,0.08); }
-        .notification-title { font-weight: 600; color: var(--text); margin-bottom: 0.25rem; }
-        .notification-message { color: var(--text-soft); font-size: 0.9rem; margin-bottom: 0.5rem; }
-        .notification-time { color: var(--text-dim); font-size: 0.8rem; }
-        .badge-unread { background: var(--indigo); color: #fff; font-size: 0.7rem; padding: 0.2rem 0.5rem; border-radius: 999px; }
-
-        .btn-mark-all { display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.6rem 1.25rem; border-radius: 999px; background: rgba(101,116,248,0.08); border: 1px solid rgba(101,116,248,0.25); color: #a5b4fc; font-weight: 600; font-size: 0.85rem; cursor: pointer; transition: all 0.2s; }
-        .btn-mark-all:hover { background: rgba(101,116,248,0.16); color: #c7d2fe; }
+        /* NOTIFICATION ITEMS — lebih rapi dan nyaman dibaca */
+        .notification-item { 
+            background: rgba(99,130,255,0.05); 
+            border: 1px solid rgba(99,130,255,0.1); 
+            border-radius: 1rem; 
+            padding: 1.2rem 1.4rem; 
+            margin-bottom: 0.85rem; 
+            transition: all 0.2s ease; 
+            cursor: pointer; 
+        }
+        .notification-item:hover { 
+            background: rgba(99,130,255,0.09); 
+            border-color: rgba(99,130,255,0.2); 
+            transform: translateY(-1px);
+        }
+        .notification-item.unread { 
+            border-left: 4px solid var(--indigo); 
+            background: rgba(101,116,248,0.07);
+        }
+        .notification-title { 
+            font-weight: 600; 
+            color: var(--text); 
+            margin-bottom: 0.3rem; 
+            font-size: 1rem;
+            letter-spacing: -0.2px;
+        }
+        .notification-message { 
+            color: var(--text-soft); 
+            font-size: 0.89rem; 
+            margin-bottom: 0.45rem; 
+            line-height: 1.4;
+        }
+        .notification-time { 
+            color: var(--text-dim); 
+            font-size: 0.75rem; 
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        /* badge dihilangkan agar tampilan lebih bersih & sederhana — cukup border kiri & background halus */
+        
+        .btn-mark-all { 
+            display: inline-flex; 
+            align-items: center; 
+            gap: 0.45rem; 
+            padding: 0.6rem 1.25rem; 
+            border-radius: 999px; 
+            background: rgba(101,116,248,0.08); 
+            border: 1px solid rgba(101,116,248,0.25); 
+            color: #a5b4fc; 
+            font-weight: 600; 
+            font-size: 0.85rem; 
+            cursor: pointer; 
+            transition: all 0.2s; 
+        }
+        .btn-mark-all:hover { 
+            background: rgba(101,116,248,0.16); 
+            color: #c7d2fe; 
+        }
 
         .pagination { justify-content: center; }
         .page-link { background: rgba(99,130,255,0.06); border-color: rgba(99,130,255,0.12); color: var(--text-soft); }
@@ -77,12 +126,13 @@
             .content-card { padding: 1.5rem; }
             .card-head { flex-direction: column; align-items: stretch; gap: 1rem; }
             .btn-mark-all { width: 100%; justify-content: center; }
+            .notification-item { padding: 1rem 1.2rem; }
         }
 
         @media (max-width: 768px) {
             .page-wrap { padding: 1.5rem 0 3rem; }
-            .notification-item { padding: 1rem; }
-            .notification-message, .notification-time { font-size: 0.92rem; }
+            .notification-item { padding: 0.9rem 1rem; }
+            .notification-message, .notification-time { font-size: 0.88rem; }
             .navbar .container { gap: 0.75rem; flex-wrap: wrap; }
             .navbar-nav { flex-direction: column; align-items: stretch; }
             .orb { display: none; }
@@ -93,7 +143,7 @@
     <div class="orb orb-1"></div>
     <div class="orb orb-2"></div>
 
-    <!-- NAVBAR -->
+    <!-- NAVBAR (tetap dengan identitas brand, tidak diubah agar konsisten) -->
     <nav class="navbar navbar-expand-lg">
         <div class="container">
             <a class="navbar-brand" href="/">
@@ -126,48 +176,51 @@
 
     <div class="page-wrap">
         <div class="container">
-            <!-- PAGE HERO -->
+            <!-- PAGE HERO : Logo diubah agar lebih sesuai dengan nuansa notifikasi (amplop / pesan) -->
             <div class="page-hero">
                 <div class="hero-logo">
                     <div class="logo-icon">
-                        <i class="bi bi-bell-fill"></i>
+                        <i class="bi bi-envelope-paper-fill"></i>  <!-- logo baru: amplop pesan, fresh & nyaman untuk notifikasi -->
                         <div class="logo-glow"></div>
                     </div>
                 </div>
-                <div class="hero-label"><i class="bi bi-bell-fill me-1"></i> Notifikasi</div>
+                <div class="hero-label"><i class="bi bi-envelope-paper me-1"></i> Notifikasi</div>
                 <h1>Pemberitahuan Terbaru</h1>
-                <p>Dapatkan update status laporan kamu secara real-time.</p>
+                <p>Dapatkan update status laporan kamu secara real-time, lebih simpel dan jelas.</p>
             </div>
 
-            <!-- NOTIFICATIONS LIST -->
+            <!-- NOTIFICATIONS LIST — tampilan bersih & nyaman -->
             <div class="content-card">
                 <div class="card-head">
-                    <h4 class="card-title"><i class="bi bi-bell"></i> Daftar Notifikasi</h4>
-                    <button class="btn-mark-all" onclick="markAllAsRead()">Tandai Semua Dibaca</button>
+                    <h4 class="card-title"><i class="bi bi-envelope-paper"></i> Daftar Notifikasi</h4>
+                    <button class="btn-mark-all" onclick="markAllAsRead()">✓ Tandai Semua Dibaca</button>
                 </div>
 
                 @forelse($notifications as $notif)
                 <div class="notification-item {{ $notif->read_at ? '' : 'unread' }}" onclick="markAsRead({{ $notif->id }})">
                     <div class="d-flex justify-content-between align-items-start">
-                        <div>
+                        <div style="flex: 1;">
                             <div class="notification-title">{{ $notif->title }}</div>
                             <div class="notification-message">{{ $notif->message }}</div>
-                            <div class="notification-time">{{ $notif->created_at->diffForHumans() }}</div>
+                            <div class="notification-time">
+                                <i class="bi bi-clock-history" style="font-size: 0.7rem;"></i> 
+                                {{ $notif->created_at->diffForHumans() }}
+                            </div>
                         </div>
-                        @if(!$notif->read_at)
-                        <span class="badge-unread">Baru</span>
-                        @endif
+                        <!-- Badge "Baru" dihapus agar tampilan lebih minimalis & nyaman, cukup border kiri + background halus -->
                     </div>
                 </div>
                 @empty
                 <div class="text-center py-5">
-                    <i class="bi bi-bell-slash" style="font-size: 3rem; color: var(--text-dim);"></i>
+                    <i class="bi bi-envelope-paper" style="font-size: 3rem; color: var(--text-dim);"></i>
                     <h5 class="mt-3 text-muted">Belum ada notifikasi</h5>
-                    <p class="text-muted">Notifikasi akan muncul saat ada update pada laporan kamu.</p>
+                    <p class="text-muted">Notifikasi akan muncul saat ada update pada laporan kamu. Tetap pantau ya!</p>
                 </div>
                 @endforelse
 
-                {{ $notifications->links() }}
+                <div class="mt-4">
+                    {{ $notifications->links() }}
+                </div>
             </div>
         </div>
     </div>

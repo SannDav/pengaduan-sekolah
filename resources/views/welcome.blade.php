@@ -339,12 +339,25 @@
                             </ul>
                         </li>
                     @elseif(session('admin_id'))
+                    @php
+    $pendingCount = \App\Models\PendingSiswa::where('status', 'pending')->count();
+@endphp
                         <li class="nav-item dropdown ms-2">
                             <a class="nav-link dropdown-toggle-pill" href="#" role="button" data-bs-toggle="dropdown">
-                                <i class="bi bi-shield-check me-1"></i> Admin: {{ session('admin_nama') }}
+                                <i class="bi bi-shield-check me-1"></i> Admin: {{ session('admin_nama') }} @if($pendingCount > 0)
+    <span class="badge bg-warning text-dark ms-1" style="font-size: 0.65rem;">{{ $pendingCount }}</span>
+@endif
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li><a class="dropdown-item" href="/admin"><i class="bi bi-speedometer2 me-2"></i>Dashboard</a></li>
+                                <li>
+    <a class="dropdown-item" href="/admin/approvals">
+        <i class="bi bi-person-check me-2"></i>Persetujuan Akun
+        @if($pendingCount > 0)
+            <span class="badge bg-warning text-dark ms-1" style="font-size: 0.65rem;">{{ $pendingCount }}</span>
+        @endif
+    </a>
+</li>
                                 <li><div class="dropdown-divider"></div></li>
                                 <li><a class="dropdown-item" href="/logout" style="color: var(--rose) !important;"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
                             </ul>
