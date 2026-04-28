@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\AdminApprovalController;
+use App\Http\Controllers\KategoriController;
 
 // Halaman Utama
 Route::get('/', function () {
@@ -31,6 +32,12 @@ Route::get('/admin/approvals', [AdminApprovalController::class, 'index']);
 Route::post('/admin/approvals/{id}/approve', [AdminApprovalController::class, 'approve']);
 Route::post('/admin/approvals/{id}/reject', [AdminApprovalController::class, 'reject']);
 Route::post('/admin/approvals/bulk-approve', [AdminApprovalController::class, 'bulkApprove']);
+
+// ── ADMIN KATEGORI ROUTES ──
+Route::get('/admin/kategori', [KategoriController::class, 'index']);
+Route::post('/admin/kategori', [KategoriController::class, 'store']);
+Route::put('/admin/kategori/{id}', [KategoriController::class, 'update']);
+Route::delete('/admin/kategori/{id}', [KategoriController::class, 'destroy']);
 
 // Notifikasi
 Route::get('/notifications', [NotificationController::class, 'index']);

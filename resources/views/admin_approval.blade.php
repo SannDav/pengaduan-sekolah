@@ -196,6 +196,7 @@
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li><a class="dropdown-item" href="/admin"><i class="bi bi-speedometer2 me-2"></i>Dashboard</a></li>
                             <li><a class="dropdown-item active" href="/admin/approvals"><i class="bi bi-person-check me-2"></i>Persetujuan Akun</a></li>
+                            <li><a class="dropdown-item" href="/admin/kategori"><i class="bi bi-tags me-2"></i>Manajemen Kategori</a></li>
                             <li><div class="dropdown-divider"></div></li>
                             <li><a class="dropdown-item" href="/logout" style="color: var(--rose) !important;"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
                         </ul>

@@ -98,6 +98,12 @@
         }
         .btn-nav-login:hover { background: rgba(101,116,248,0.25); border-color: rgba(101,116,248,0.55); }
 
+        .dropdown-toggle-pill { background: rgba(99,130,255,0.1) !important; color: var(--text) !important; border-radius: 999px !important; padding: 0.45rem 1.1rem !important; font-weight: 500; border: 1px solid var(--gb) !important; box-shadow: none !important; }
+        .dropdown-menu { background: rgba(10,16,32,0.97) !important; backdrop-filter: blur(18px); border: 1px solid var(--gb) !important; border-radius: 1.1rem !important; box-shadow: 0 20px 50px rgba(0,0,0,0.4) !important; padding: 0.5rem !important; }
+        .dropdown-item { color: var(--text-soft) !important; border-radius: 0.65rem; padding: 0.6rem 1rem; font-size: 0.88rem; transition: all 0.2s; }
+        .dropdown-item:hover { background: rgba(99,130,255,0.12) !important; color: var(--text) !important; }
+        .dropdown-divider { border-color: rgba(99,130,255,0.1) !important; margin: 0.35rem 0.5rem; }
+
         /* ── PAGE ── */
         .page-wrap { position: relative; z-index: 1; padding: 2.5rem 0 5rem; }
 
@@ -326,6 +332,7 @@
         @endif
     </a>
 </li>
+                            <li><a class="dropdown-item" href="/admin/kategori"><i class="bi bi-tags me-2"></i>Manajemen Kategori</a></li>
                             <li><div class="dropdown-divider"></div></li>
                             <li><a class="dropdown-item" href="/logout" style="color: var(--rose) !important;"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
                         </ul>
