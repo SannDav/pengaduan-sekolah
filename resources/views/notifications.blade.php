@@ -7,6 +7,7 @@
     <title>Notifikasi — LaporSekolah!</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <style>
         :root {
             --bg: #0f1729; --text: #e8edf8; --text-soft: #94a3b8; --text-dim: #64748b;
@@ -36,6 +37,7 @@
         .dropdown-menu { background: rgba(10,16,32,0.97) !important; backdrop-filter: blur(18px); border: 1px solid var(--gb) !important; border-radius: 1.1rem !important; box-shadow: 0 20px 50px rgba(0,0,0,0.4) !important; padding: 0.5rem !important; }
         .dropdown-item { color: var(--text-soft) !important; border-radius: 0.65rem; padding: 0.6rem 1rem; font-size: 0.88rem; transition: all 0.2s; }
         .dropdown-item:hover { background: rgba(99,130,255,0.12) !important; color: var(--text) !important; }
+        .dropdown-divider { border-color: rgba(99,130,255,0.1) !important; margin: 0.35rem 0.5rem; }
 
         .page-wrap { position: relative; z-index: 1; padding: 2.5rem 0 5rem; }
         .page-hero { background: linear-gradient(135deg, rgba(101,116,248,0.15) 0%, rgba(15,23,42,0.9) 60%); border: 1px solid var(--gb); border-radius: 1.75rem; padding: 2.25rem; margin-bottom: 2rem; box-shadow: 0 20px 50px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.04); position: relative; overflow: hidden; }
@@ -155,6 +157,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto align-items-center gap-1">
+                    <li class="nav-item"><a class="nav-link" href="/"><i class="bi bi-house-door me-1"></i>Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="/aspirasi"><i class="bi bi-journal-text me-1"></i>Semua Laporan</a></li>
                     @if(session('siswa_nis'))
                         <li class="nav-item dropdown ms-2">

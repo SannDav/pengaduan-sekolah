@@ -212,7 +212,7 @@
             </div>
 
             <!-- LAPORAN SAYA -->
-            <div class="content-card">
+            {{-- <div class="content-card">
                 <div class="card-title">
                     <i class="bi bi-clock-history"></i> Riwayat Laporan Saya
                 </div>
@@ -278,7 +278,7 @@
                         </table>
                     </div>
                 @endif
-            </div>
+            </div> --}}
 
             <!-- ═══════════════════════════════════════════════════════
                  AUDIT LOG / HISTORY AKTIVITAS ADMIN
