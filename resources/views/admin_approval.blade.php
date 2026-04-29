@@ -230,6 +230,10 @@
                             <div class="num">{{ $rejected->count() }}</div>
                             <small>Ditolak</small>
                         </div>
+                        <div class="stat-chip">
+                            <div class="num">{{ $allSiswa->count() }}</div>
+                            <small>Total Siswa</small>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -253,6 +257,12 @@
                 </button>
                 <button class="tab-btn" onclick="switchTab('rejected', this)">
                     <i class="bi bi-x-circle"></i> Ditolak
+                </button>
+                <button class="tab-btn" onclick="switchTab('allsiswa', this)">
+                    <i class="bi bi-people-fill"></i> Semua Siswa
+                    @if($allSiswa->count() > 0)
+                        <span style="background: var(--indigo); color: #fff; border-radius: 999px; padding: 0.1rem 0.5rem; font-size: 0.7rem; font-weight: 800;">{{ $allSiswa->count() }}</span>
+                    @endif
                 </button>
             </div>
 
@@ -386,12 +396,62 @@
                             <tbody>
                                 @foreach($rejected as $r)
                                 <tr>
-                                    <td style="font-weight: 600; color: var(--text);">{{ $r->nama }}</td>
+                                    <td style="font-weight: 600; color: var('text');">{{ $r->nama }}</td>
                                     <td style="color: #a5b4fc; font-family: 'Sora', sans-serif; font-size: 0.82rem;">{{ $r->nis }}</td>
-                                    <td style="color: var(--text-soft);">{{ $r->kelas }}</td>
-                                    <td style="color: var(--text-dim); font-size: 0.82rem;">{{ $r->created_at->format('d M Y H:i') }}</td>
-                                    <td style="color: var(--text-soft); font-size: 0.82rem; font-style: italic;">{{ $r->reject_reason ?? '—' }}</td>
+                                    <td style="color: var('text-soft');">{{ $r->kelas }}</td>
+                                    <td style="color: var('text-dim'); font-size: 0.82rem;">{{ $r->created_at->format('d M Y H:i') }}</td>
+                                    <td style="color: var('text-soft'); font-size: 0.82rem; font-style: italic;">{{ $r->reject_reason ?? '—' }}</td>
                                     <td><span class="badge-rejected"><span class="badge-dot"></span> Ditolak</span></td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                    @endif
+                </div>
+            </div>
+
+            <!-- ═══ TAB ALL SISWA ═══ -->
+            <div class="tab-pane" id="pane-allsiswa">
+                <div class="content-card">
+                    <div class="card-head">
+                        <h4 class="card-title"><i class="bi bi-people-fill"></i> Semua Akun Siswa</h4>
+                        <span style="color: var(--text-dim); font-size: 0.82rem;">{{ $allSiswa->count() }} siswa terdaftar</span>
+                    </div>
+
+                    @if($allSiswa->isEmpty())
+                        <div class="empty-state">
+                            <div class="empty-icon"><i class="bi bi-people"></i></div>
+                            <h5>Belum Ada Siswa Terdaftar</h5>
+                            <p>Belum ada akun siswa yang aktif di sistem.</p>
+                        </div>
+                    @else
+                    <div class="table-responsive">
+                        <table class="simple-table">
+                            <thead>
+                                <tr>
+                                    <th>Nama</th><th>NIS</th><th>Kelas</th><th>Password</th><th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($allSiswa as $s)
+                                <tr>
+                                    <td style="font-weight: 600; color: var(--text);">{{ $s->nama }}</td>
+                                    <td style="color: #a5b4fc; font-family: 'Sora', sans-serif; font-size: 0.82rem;">{{ $s->nis }}</td>
+                                    <td style="color: var(--text-soft);">{{ $s->kelas }}</td>
+                                    <td style="color: var(--text-dim); font-size: 0.82rem; font-family: monospace;">••••••••</td>
+                                    <td>
+                                        <div style="display: flex; gap: 0.5rem;">
+                                            <button type="button" class="btn-approve" style="padding: 0.4rem 0.7rem; font-size: 0.78rem; flex: none;"
+                                                onclick="openEditModal('{{ $s->nis }}', '{{ addslashes($s->nama) }}', '{{ addslashes($s->kelas) }}')">
+                                                <i class="bi bi-pencil-square"></i> Edit
+                                            </button>
+                                            <button type="button" class="btn-reject" style="padding: 0.4rem 0.7rem; font-size: 0.78rem; flex: none;"
+                                                onclick="confirmDeleteSiswa('{{ $s->nis }}', '{{ addslashes($s->nama) }}')">
+                                                <i class="bi bi-trash"></i> Hapus
+                                            </button>
+                                        </div>
+                                    </td>
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -426,6 +486,44 @@
                     <div class="modal-footer">
                         <button type="button" class="btn-modal-cancel" data-bs-dismiss="modal">Batal</button>
                         <button type="submit" class="btn-modal-danger"><i class="bi bi-x-lg"></i> Ya, Tolak</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL EDIT SISWA -->
+    <div class="modal fade" id="editSiswaModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <form id="editSiswaForm" method="POST">
+                    @csrf
+                    @method('PUT')
+                    <div class="modal-header">
+                        <h5 class="modal-title"><i class="bi bi-pencil-square me-2" style="color: var(--emerald);"></i>Edit Akun Siswa</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label class="form-label">NIS</label>
+                            <input type="text" id="edit-nis" class="form-control" disabled>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Nama Siswa</label>
+                            <input type="text" name="nama" id="edit-nama" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Kelas</label>
+                            <input type="text" name="kelas" id="edit-kelas" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Password Baru <span style="color: var(--text-dim);">(Kosongkan jika tidak ingin mengubah)</span></label>
+                            <input type="password" name="password" id="edit-password" class="form-control" placeholder="Minimal 6 karakter">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn-modal-cancel" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn-approve" style="padding: 0.7rem 1.5rem;"><i class="bi bi-check-lg"></i> Simpan Perubahan</button>
                     </div>
                 </form>
             </div>
@@ -523,6 +621,44 @@
                 // langsung submit tanpa konfirmasi biar cepat, tapi bisa ditambah kalau mau
             });
         });
+
+        // Open edit modal
+        function openEditModal(nis, nama, kelas) {
+            document.getElementById('edit-nis').value = nis;
+            document.getElementById('edit-nama').value = nama;
+            document.getElementById('edit-kelas').value = kelas;
+            document.getElementById('edit-password').value = '';
+            document.getElementById('editSiswaForm').action = `/admin/siswa/${nis}`;
+            new bootstrap.Modal(document.getElementById('editSiswaModal')).show();
+        }
+
+        // Confirm delete siswa
+        function confirmDeleteSiswa(nis, nama) {
+            Swal.fire({
+                title: `Hapus Akun ${nama}?`,
+                text: `Akun siswa dengan NIS ${nis} akan dihapus permanen. Tindakan ini tidak bisa dibatalkan!`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#fb7185',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Ya, Hapus!',
+                cancelButtonText: 'Batal',
+                background: 'rgba(10,16,32,0.97)',
+                color: '#e8edf8',
+            }).then(result => {
+                if (result.isConfirmed) {
+                    const form = document.createElement('form');
+                    form.method = 'POST';
+                    form.action = `/admin/siswa/${nis}`;
+                    form.innerHTML = `
+                        <input type="hidden" name="_token" value="${document.querySelector('meta[name=csrf-token]').content}">
+                        <input type="hidden" name="_method" value="DELETE">
+                    `;
+                    document.body.appendChild(form);
+                    form.submit();
+                }
+            });
+        }
     </script>
 </body>
 </html>

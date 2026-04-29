@@ -404,7 +404,7 @@
                                 @endif
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end">
-                                <li><a class="dropdown-item" href="/profile"><i class="bi bi-collection me-2"></i>Laporan Saya</a></li>
+                                <li><a class="dropdown-item" href="/profile"><i class="bi bi-collection me-2"></i>Riwayat Laporan</a></li>
                                 <li><a class="dropdown-item" href="/notifications"><i class="bi bi-bell me-2"></i>Notifikasi @if($unreadCount > 0)<span class="badge bg-danger ms-1" style="font-size: 0.7rem;">{{ $unreadCount }}</span>@endif</a></li>
                                 <li><div class="dropdown-divider"></div></li>
                                 <li><a class="dropdown-item" href="/logout" style="color: var(--rose) !important;"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>

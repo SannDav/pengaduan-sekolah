@@ -33,6 +33,10 @@ Route::post('/admin/approvals/{id}/approve', [AdminApprovalController::class, 'a
 Route::post('/admin/approvals/{id}/reject', [AdminApprovalController::class, 'reject']);
 Route::post('/admin/approvals/bulk-approve', [AdminApprovalController::class, 'bulkApprove']);
 
+// ── ADMIN SISWA MANAGEMENT ROUTES ──
+Route::put('/admin/siswa/{nis}', [AdminApprovalController::class, 'updateSiswa']);
+
+
 // ── ADMIN KATEGORI ROUTES ──
 Route::get('/admin/kategori', [KategoriController::class, 'index']);
 Route::post('/admin/kategori', [KategoriController::class, 'store']);
