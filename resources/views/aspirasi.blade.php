@@ -480,8 +480,24 @@
             <div class="content-card">
                 <div class="card-head">
                     <div>
-                        <h4 class="card-title"><i class="bi bi-journal-text"></i> {{ session('admin_id') ? 'Semua Laporan Siswa' : 'Daftar Laporan Saya' }}</h4>
-                        <p class="card-subtitle">{{ session('admin_id') ? 'Admin dapat melihat semua laporan siswa yang telah masuk.' : 'Hanya laporan yang dikirim oleh NIS kamu sendiri.' }}</p>
+<h4 class="card-title"><i class="bi bi-journal-text"></i> 
+@if(session('admin_id'))
+    Semua Laporan Siswa
+@elseif(isset($view) && $view == 'all')
+    Semua Laporan Siswa
+@else
+    Daftar Laporan Saya
+@endif
+</h4>
+                        <p class="card-subtitle">
+@if(session('admin_id'))
+    Admin dapat melihat semua laporan siswa yang telah masuk.
+@elseif(isset($view) && $view == 'all')
+    Melihat semua laporan dari seluruh siswa (hanya baca).
+@else
+    Hanya laporan yang dikirim oleh NIS kamu sendiri.
+@endif
+</p>
                     </div>
                     @if(!session('admin_id'))
                     <button type="button" class="btn-hero-new" data-bs-toggle="modal" data-bs-target="#modalBuatAspirasi">
@@ -537,7 +553,13 @@
                         </div>
                         @endforelse
                     </div>
-                @else
+@else
+@if(session('siswa_nis'))
+    <div class="d-flex flex-wrap align-items-center gap-2 mb-4 pb-3 border-bottom border-white border-opacity-10">
+        <a href="/aspirasi?view=mine" class="filter-btn {{ ($view ?? 'mine') == 'mine' ? 'active' : '' }}">Laporan Saya</a>
+        <a href="/aspirasi?view=all" class="filter-btn {{ ($view ?? 'mine') == 'all' ? 'active' : '' }}">Semua Laporan</a>
+    </div>
+@endif
                     <div class="table-responsive">
                         <table class="report-table">
                             <thead>
@@ -766,7 +788,9 @@
 
         async function refreshAspirasiStats() {
             try {
-                const response = await fetch('/aspirasi/stats');
+                const urlParams = new URLSearchParams(window.location.search);
+                const viewParam = urlParams.get('view') || 'mine';
+                const response = await fetch(`/aspirasi/stats?view=${viewParam}`);
                 if (!response.ok) throw new Error('Fetch gagal');
 
                 const data = await response.json();

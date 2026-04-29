@@ -37,9 +37,12 @@ class AspirasiController extends Controller
             return redirect('/login')->with('error', 'Login dulu, Wak. Baru bisa lihat laporanmu di sini.');
         }
 
-        $aspirasisQuery = Aspirasi::where('nis', session('siswa_nis'))
-                            ->with('kategori')
-                            ->orderBy('created_at', 'desc');
+        $view = request('view', 'mine');
+        $aspirasisQuery = Aspirasi::with('kategori')->orderBy('created_at', 'desc');
+        
+        if ($view == 'mine') {
+            $aspirasisQuery->where('nis', session('siswa_nis'));
+        }
 
         $stats = [
             'total'    => $aspirasisQuery->count(),
@@ -50,7 +53,7 @@ class AspirasiController extends Controller
 
         $aspirasis = $aspirasisQuery->get();
 
-        return view('aspirasi', compact('kategoris', 'aspirasis', 'stats'));
+        return view('aspirasi', compact('kategoris', 'aspirasis', 'stats', 'view'));
     }
 
     public function stats()
@@ -58,7 +61,11 @@ class AspirasiController extends Controller
         if (session('admin_id')) {
             $scope = Aspirasi::query();
         } elseif (session('siswa_nis')) {
-            $scope = Aspirasi::where('nis', session('siswa_nis'));
+            $view = request('view', 'mine');
+            $scope = Aspirasi::query();
+            if ($view == 'mine') {
+                $scope->where('nis', session('siswa_nis'));
+            }
         } else {
             return response()->json(['error' => 'Unauthorized'], 403);
         }
