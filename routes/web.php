@@ -35,6 +35,7 @@ Route::post('/admin/approvals/bulk-approve', [AdminApprovalController::class, 'b
 
 // ── ADMIN SISWA MANAGEMENT ROUTES ──
 Route::put('/admin/siswa/{nis}', [AdminApprovalController::class, 'updateSiswa']);
+Route::delete('/admin/siswa/{nis}', [AdminApprovalController::class, 'destroySiswa']);
 
 
 // ── ADMIN KATEGORI ROUTES ──
@@ -43,7 +44,7 @@ Route::post('/admin/kategori', [KategoriController::class, 'store']);
 Route::put('/admin/kategori/{id}', [KategoriController::class, 'update']);
 Route::delete('/admin/kategori/{id}', [KategoriController::class, 'destroy']);
 
-// Notifikasi
+// Notifikasi 
 Route::get('/notifications', [NotificationController::class, 'index']);
 Route::post('/notifications/{id}/read', [NotificationController::class, 'markAsRead']);
 Route::post('/notifications/mark-all-read', [NotificationController::class, 'markAllAsRead']);
