@@ -317,7 +317,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto align-items-center gap-1">
                     <li class="nav-item"><a class="nav-link" href="#alur"><i class="bi bi-journal-text me-1"></i>Keunggulan</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#laporan"><i class="bi bi-megaphone me-1"></i>Semua Laporan</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/aspirasi"><i class="bi bi-megaphone me-1"></i>Semua Laporan</a></li>
                     @if(session('siswa_nis'))
                         <li class="nav-item dropdown ms-2">
                             <a class="nav-link dropdown-toggle-pill" href="#" role="button" data-bs-toggle="dropdown">
