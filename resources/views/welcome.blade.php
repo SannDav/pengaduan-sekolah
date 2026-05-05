@@ -268,6 +268,39 @@
         .cta-box h2 { font-family: 'Sora', sans-serif; font-weight: 800; font-size: clamp(1.75rem, 3.5vw, 2.6rem); color: var(--text); margin-bottom: 1rem; letter-spacing: -0.025em; }
         .cta-box p { color: var(--text-soft); font-size: 1rem; max-width: 460px; margin: 0 auto 2rem; }
 
+        /* ── BACK TO TOP ── */
+#backToTop {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 9999;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #6574f8, #7c3aed);
+    border: none;
+    color: #fff;
+    font-size: 1.1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 20px rgba(101,116,248,0.45);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+}
+#backToTop.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+#backToTop:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(101,116,248,0.6);
+}
+
         /* ── FOOTER ── */
         footer {
             position: relative; z-index: 1;
@@ -317,7 +350,11 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto align-items-center gap-1">
                     <li class="nav-item"><a class="nav-link" href="#alur"><i class="bi bi-journal-text me-1"></i>Keunggulan</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/aspirasi"><i class="bi bi-megaphone me-1"></i>Semua Laporan</a></li>
+                    <li class="nav-item">
+    <a class="nav-link" href="{{ (session('siswa_nis') || session('admin_id')) ? '/aspirasi' : '#laporan' }}">
+        <i class="bi bi-megaphone me-1"></i>Semua Laporan
+    </a>
+</li>
                     @if(session('siswa_nis'))
                         <li class="nav-item dropdown ms-2">
                             <a class="nav-link dropdown-toggle-pill" href="#" role="button" data-bs-toggle="dropdown">
@@ -675,6 +712,11 @@
         </div>
     </footer>
 
+    <!-- BACK TO TOP BUTTON -->
+<button id="backToTop" title="Kembali ke atas" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+    <i class="bi bi-chevron-up"></i>
+</button>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         // Scroll-triggered fade for stat numbers (simple counter animation)
@@ -704,6 +746,17 @@
         }, { threshold: 0.3 });
 
         document.querySelectorAll('.stats-band').forEach(el => observer.observe(el));
+
+        // ── BACK TO TOP ──
+        const backToTopBtn = document.getElementById('backToTop');
+        window.addEventListener('scroll', function () {
+            if (window.scrollY > 400) {
+                backToTopBtn.classList.add('show');
+            } else {
+                backToTopBtn.classList.remove('show');
+            }
+        });
     </script>
+</button>
 </body>
 </html>

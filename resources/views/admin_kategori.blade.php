@@ -326,9 +326,22 @@
                                         <form action="/admin/kategori/{{ $kat->id_kategori }}" method="POST" class="d-inline form-hapus">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="button" class="btn-danger-pill btn-sm btn-hapus">
-                                                <i class="bi bi-trash"></i> Hapus
-                                            </button>
+                                            @if($kat->aspirasis()->count() > 0)
+    <button type="button" class="btn-danger-pill btn-sm"
+        disabled
+        style="opacity: 0.4; cursor: not-allowed;"
+        title="Tidak bisa dihapus — kategori ini masih digunakan oleh {{ $kat->aspirasis()->count() }} laporan">
+        <i class="bi bi-lock"></i> Dipakai
+    </button>
+@else
+    <form action="/admin/kategori/{{ $kat->id_kategori }}" method="POST" class="d-inline form-hapus">
+        @csrf
+        @method('DELETE')
+        <button type="button" class="btn-danger-pill btn-sm btn-hapus">
+            <i class="bi bi-trash"></i> Hapus
+        </button>
+    </form>
+@endif
                                         </form>
                                     </div>
                                 </td>

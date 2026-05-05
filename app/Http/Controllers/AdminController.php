@@ -36,6 +36,10 @@ class AdminController extends Controller
             $query->where('id_kategori', $request->kategori);
         }
 
+        if ($request->filled('tanggal')) {
+            $query->whereDate('created_at', $request->tanggal);
+        }
+
         $aspirasis = $query->orderBy('created_at', 'desc')->paginate(15);
 
         return view('admin_dashboard', compact('aspirasis'));
@@ -261,6 +265,7 @@ class AdminController extends Controller
 
         if ($request->filled('status'))   $query->where('status', $request->status);
         if ($request->filled('kategori')) $query->where('id_kategori', $request->kategori);
+        if ($request->filled('tanggal')) {$query->whereDate('created_at', $request->tanggal);}
 
         $aspirasis = $query->orderBy('created_at', 'desc')->get();
         $filename  = 'laporan_aspirasi_' . date('Y-m-d_H-i-s') . '.csv';
